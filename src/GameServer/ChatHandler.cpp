@@ -258,10 +258,10 @@ void CUser::ChatTargetSelect(Packet & pkt)
 	else if (type == 3)
 	{
 		//Questions
-		uint8 unk1;
-		string sMessage;
-		pkt >> unk1 >> sMessage;
-
+		uint8 sSubType;
+		uint8 sMessageLen;
+		std::string sMessage;
+		pkt >> sSubType >> sMessageLen >> sMessage;
 	}
 	// Allow/block PMs
 	else
@@ -334,6 +334,7 @@ COMMAND_HANDLER(CUser::HandleGiveItemCommand)
 	if (vargs.size() < 2)
 	{
 		// send description
+		g_pMain->SendHelpDescription(this, "Using Sample : +give_item CharacterName ItemID StackSize");
 		return true;
 	}
 
@@ -374,6 +375,7 @@ COMMAND_HANDLER(CUser::HandleZoneChangeCommand)
 	if (vargs.empty())
 	{
 		// send description
+		g_pMain->SendHelpDescription(this, "Using Sample : +zonechange ZoneNumber");
 		return true;
 	}
 
@@ -388,6 +390,7 @@ COMMAND_HANDLER(CUser::HandleMonsterSummonCommand)
 	if (vargs.empty())
 	{
 		// send description
+		g_pMain->SendHelpDescription(this, "Using Sample : +monsummon MonsterSID");
 		return true;
 	}
 
@@ -402,6 +405,7 @@ COMMAND_HANDLER(CUser::HandleNPCSummonCommand)
 	if (vargs.empty())
 	{
 		// send description
+		g_pMain->SendHelpDescription(this, "Using Sample : +npcsummon NPCSID");
 		return true;
 	}
 
@@ -531,6 +535,7 @@ COMMAND_HANDLER(CUser::HandleLoyaltyChangeCommand)
 	if (vargs.size() < 2)
 	{
 		// send description
+		g_pMain->SendHelpDescription(this, "Using Sample : +np_change CharacterName Loyalty(+/-)");
 		return true;
 	}
 
@@ -558,6 +563,7 @@ COMMAND_HANDLER(CUser::HandleExpChangeCommand)
 	if (vargs.size() < 2)
 	{
 		// send description
+		g_pMain->SendHelpDescription(this, "Using Sample : +exp_change CharacterName Exp(+/-)");
 		return true;
 	}
 
@@ -585,6 +591,7 @@ COMMAND_HANDLER(CUser::HandleGoldChangeCommand)
 	if (vargs.size() < 2)
 	{
 		// send description
+		g_pMain->SendHelpDescription(this, "Using Sample : +gold_change CharacterName Gold(+/-)");
 		return true;
 	}
 
@@ -618,6 +625,7 @@ COMMAND_HANDLER(CUser::HandleExpAddCommand)
 	if (vargs.empty())
 	{
 		// send description
+		g_pMain->SendHelpDescription(this, "Using Sample : +exp_add Percent");
 		return true;
 	}
 
@@ -638,6 +646,7 @@ COMMAND_HANDLER(CUser::HandleMoneyAddCommand)
 	if (vargs.empty())
 	{
 		// send description
+		g_pMain->SendHelpDescription(this, "Using Sample : +money_add Percent");
 		return true;
 	}
 
@@ -656,6 +665,7 @@ COMMAND_HANDLER(CUser::HandlePermitConnectCommand)
 	// Char name
 	if (vargs.size() < 1)
 	{
+		g_pMain->SendHelpDescription(this, "Using Sample : +permitconnect CharacterName");
 		// send description
 		return true;
 	}
@@ -750,6 +760,16 @@ COMMAND_HANDLER(CGameServerDlg::HandlePermanentChatCommand)
 
 	SetPermanentMessage("%s", args);
 	return true;
+}
+
+void CGameServerDlg::SendHelpDescription(CUser *pUser, std::string sHelpMessage)
+{
+	if (pUser == nullptr || sHelpMessage == "")
+		return;
+
+	Packet result(WIZ_CHAT, (uint8)PUBLIC_CHAT);
+	result << pUser->GetNation() << pUser->GetSocketID() << (uint8)0 << sHelpMessage;
+	pUser->Send(&result);
 }
 
 void CGameServerDlg::SetPermanentMessage(const char * format, ...)

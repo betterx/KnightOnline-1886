@@ -548,6 +548,9 @@ void CUser::RemovePlayerRanking()
 
 void CUser::UpdatePlayerRank()
 {
+	if (isGM())
+		return;
+
 	_PVP_RANKINGS * pRank = g_pMain->m_PVPRankingsArray[GetNation() -1].GetData(GetSocketID());
 
 	if (pRank == nullptr)

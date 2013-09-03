@@ -797,6 +797,7 @@ public:
 	void ItemUpgradeNotice(_ITEM_TABLE * pItem, uint8 UpgradeResult);
 	void ItemUpgradeAccessories(Packet & pkt);
 	void BifrostPieceProcess(Packet & pkt); // originally named BeefRoastPieceProcess() -- that's not happening.
+	void SpecialItemExchange(Packet & pkt);
 	void ItemUpgradeRebirth(Packet & pkt);
 	void ItemSealProcess(Packet & pkt);
 	void SealItem(uint8 bSealType, uint8 bSrcPos);
@@ -878,7 +879,6 @@ public:
 	void SendServerChange(std::string & ip, uint8 bInit);
 	void Send2AI_UserUpdateInfo(bool initialInfo = false);
 	uint16 GetPremiumExpPercent();
-	void SendBifrostTime(bool bSendAll = false);
 	void BifrostProcess(CUser * pUser);
 
 	virtual void GetInOut(Packet & result, uint8 bType);

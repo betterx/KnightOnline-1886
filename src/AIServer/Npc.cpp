@@ -2185,7 +2185,7 @@ time_t CNpc::Attack()
 			if (nRandom < nPercent)	
 			{
 				CNpcMagicProcess::MagicPacket(MAGIC_EFFECTING, m_proto->m_iMagic1, GetID(), -1, int16(pUser->GetX()), int16(pUser->GetY()), int16(pUser->GetZ()));
-				printf("++++ AreaMagicAttack --- sid=%d, magicid=%d\n", GetID(), m_proto->m_iMagic1);
+				printf("AreaMagicAttack --- sid=%d, magicid=%d, name=%s\n", GetID(), m_proto->m_iMagic1, m_proto->m_strName.c_str());
 				return m_sAttackDelay + 1000;
 			}
 		}
@@ -2195,7 +2195,7 @@ time_t CNpc::Attack()
 			if (nRandom < nPercent)	
 			{
 				CNpcMagicProcess::MagicPacket(MAGIC_EFFECTING, m_proto->m_iMagic1, GetID(), pUser->GetID());
-				printf("LongAndMagicAttack --- sid=%d, tid=%d\n", GetID(), pUser->GetID());
+				printf("LongAndMagicAttack --- sid=%d, tid=%d, magicid=%d, name=%s\n", GetID(), pUser->GetID(), m_proto->m_iMagic1, m_proto->m_strName.c_str());
 				return m_sAttackDelay;
 			}
 		}
@@ -2279,7 +2279,6 @@ time_t CNpc::LongAndMagicAttack()
 		}
 
 		return CNpcMagicProcess::MagicPacket(MAGIC_CASTING, m_proto->m_iMagic1, GetID(), pUser->GetID());
-		//TRACE("**** LongAndMagicAttack --- sid=%d, tid=%d\n", GetID(), pUser->GetID());
 	}
 	else // Target monster/NPC 
 	{

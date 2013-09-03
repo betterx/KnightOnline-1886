@@ -560,12 +560,12 @@ void CUser::SendLoyaltyChange(int32 nChangeAmount /*= 0*/, bool bIsKillReward /*
 	// We're simply adding NP here.
 	else
 	{
+		// If you're using an NP modifying buff then add the bonus
+		nChangeAmount = m_bNPGainAmount * nChangeAmount / 100;
+
 		// We should only apply NP bonuses when NP was gained as a reward for killing a player.
 		if (bIsKillReward)
 		{
-			// If you're using an NP modifying buff then add the bonus (NOTE: We do not take extra NP from the user that dies!)
-			nChangeAmount = m_bNPGainAmount * nChangeAmount / 100;
-
 			// Add on any additional NP gained from items/skills.
 			nChangeAmount += m_bItemNPBonus + m_bSkillNPBonus;
 
@@ -1047,8 +1047,8 @@ void CUser::SetZoneAbilityChange(uint16 sNewZone)
 	if (!isGM())
 		PlayerRanking(sNewZone,false);
 
-	if (sNewZone == ZONE_RONARK_LAND || ZONE_BIFROST)
-		SendBifrostTime();
+	if (sNewZone == ZONE_RONARK_LAND || sNewZone ==  ZONE_BIFROST)
+		g_pMain->SendBifrostTime(this);
 }
 
 /**

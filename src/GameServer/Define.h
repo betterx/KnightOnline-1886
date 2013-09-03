@@ -80,6 +80,7 @@ enum InOutType
 #define SNOW_EVENT_SKILL		490043
 
 // Temple Event
+#define BIFROST_EVENT_COUNT				3
 #define CHAOS_EVENT_COUNT				3
 #define BORDER_DEFENSE_WAR_EVENT_COUNT	3
 #define JURAD_MOUNTAIN_EVENT_COUNT		3

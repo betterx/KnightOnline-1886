@@ -4,8 +4,9 @@
 using std::string;
 using std::vector;
 
-void CUser::SendBifrostTime(bool bSendAll) {
-	Packet result(WIZ_BIFROST,uint8(2));
+void CGameServerDlg::SendBifrostTime(CUser *pUser, bool bSendAll) {
+	
+	Packet result(WIZ_BIFROST,uint8(BIFROST_EVENT));
 	result << g_pMain->m_sBifrostRemainingTime;
 
 	if (bSendAll)
@@ -14,7 +15,12 @@ void CUser::SendBifrostTime(bool bSendAll) {
 		g_pMain->Send_All(&result,nullptr, 0, ZONE_BIFROST);
 	}
 	else
-		Send(&result);
+	{
+		if (pUser == nullptr)
+			return;
+
+		pUser->Send(&result);
+	}
 }
 
 void CUser::BifrostProcess(CUser * pUser)
@@ -28,7 +34,7 @@ void CUser::BifrostProcess(CUser * pUser)
 		g_pMain->m_sBifrostRemainingTime = g_pMain->m_sBifrostTime;
 		g_pMain->m_BifrostVictory = pUser->GetNation();
 		g_pMain->SendFormattedResource(pUser->GetNation() == ELMORAD ? IDS_BEEF_ROAST_VICTORY_ELMORAD : IDS_BEEF_ROAST_VICTORY_KARUS, Nation::ALL,false);
-		pUser->SendBifrostTime(true);
+		g_pMain->SendBifrostTime(nullptr, true);
 
 		if (g_pMain->m_bAttackBifrostMonument)
 			g_pMain->m_bAttackBifrostMonument = false;

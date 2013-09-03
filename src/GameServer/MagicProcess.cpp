@@ -13,6 +13,15 @@
 #if defined(GAMESERVER)
 void CMagicProcess::MagicPacket(Packet & pkt, Unit * pCaster /*= nullptr*/)
 {
+	bool bSkillTestMode = false;
+
+	if (bSkillTestMode)
+	{
+		if (pCaster->isPlayer())
+			if (!TO_USER(pCaster)->isGM())
+				return;
+	}
+
 	MagicInstance instance;
 	pkt >> instance.bOpcode >> instance.nSkillID;
 
@@ -498,7 +507,6 @@ bool CMagicProcess::GrantType4Buff(_MAGIC_TABLE * pSkill, _MAGIC_TYPE4 *pType, U
 		break;
 
 	case BUFF_TYPE_STUN:
-		if(pTarget->isPlayer())
 		pTarget->m_bSpeedAmount = pType->bSpeed;
 		break; 
 
@@ -831,14 +839,12 @@ bool CMagicProcess::RemoveType4Buff(uint8 byBuffType, Unit *pTarget, bool bRemov
 		break;
 
 	case BUFF_TYPE_DAGGER_BOW_DEFENSE: // Eskrima
-		// Inflicts attacks as well as a bleeding curse on the enemy. Deceases 10% Dagger and Bow Defense of the enemy under the bleeding curse buff.
+		// Inflicts attacks as well as a bleeding curse on the enemy. Decreases 10% Dagger and Bow Defense of the enemy under the bleeding curse buff.
 		pTarget->m_byDaggerRAmount = pTarget->m_byBowRAmount = 100; // note: overwrite the percentage for now (nothing else uses it)
 		break;
 
 	case BUFF_TYPE_STUN : // Lighting Skill
-		if(pTarget->isPlayer())
 		pTarget->m_bSpeedAmount = 100;
-		//pTarget->
 		break; 
 
 	case BUFF_TYPE_LOYALTY_AMOUNT:		// Santa's Present (gives an extra +2NP per kill, unlike BUFF_TYPE_LOYALTY which uses an percent).

@@ -346,12 +346,7 @@ void CNpc::OnDeathProcess(Unit *pKiller)
 					break;
 				case NPC_PVP_MONUMENT:
 					PVPMonumentProcess(pUser);
-<<<<<<< HEAD
-				case NPC_CHAOS_STONE:
-					ChaosStoneProcess(pUser,5);
-=======
 					break;
->>>>>>> 13f2b23b5aff33c87191c94503202fd196816ac7
 				default:
 					break;
 				}
@@ -362,16 +357,12 @@ void CNpc::OnDeathProcess(Unit *pKiller)
 				{
 					if (pUser->CheckExistEvent(STARTER_SEED_QUEST, 1))
 						pUser->SaveEvent(STARTER_SEED_QUEST, 2);
-				} 
-				else if (g_pMain->m_MonsterRespawnListArray.GetData(m_sSid) != nullptr) 
-				{
+				} else if (g_pMain->m_MonsterRespawnListArray.GetData(m_sSid) != nullptr) {
 					if (pUser->isPVPZone() || GetZoneID() == ZONE_JURAD_MOUNTAIN)
 						g_pMain->SpawnEventNpc(g_pMain->m_MonsterRespawnListArray.GetData(m_sSid)->sSid, true, GetZoneID(), GetX(), GetY(), GetZ(), g_pMain->m_MonsterRespawnListArray.GetData(m_sSid)->sCount);
-				} 
-				/*else if (m_tNpcType == NPC_CHAOS_STONE && pUser->isPVPZone()) 
-				{
+				} else if (m_tNpcType == NPC_CHAOS_STONE && pUser->isPVPZone()) {
 					ChaosStoneProcess(pUser,5);
-				}*/
+				}
 			}
 		}
 	}

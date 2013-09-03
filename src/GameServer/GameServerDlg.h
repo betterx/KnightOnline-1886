@@ -148,6 +148,8 @@ public:
 	// Get list of merchants in region
 	void GetRegionMerchantUserIn(C3DMap* pMap, uint16 region_x, uint16 region_z, Packet & pkt, uint16 & t_count);
 
+	void SendHelpDescription(CUser *pUser, std::string sHelpMessage);
+
 	INLINE bool isPermanentMessageSet() { return m_bPermanentChatMode; }
 	void SetPermanentMessage(const char * format, ...);
 
@@ -374,6 +376,8 @@ public:
 	uint8	m_sRankResetHour;
 
 	// Bifrost
+	uint8   m_nBifrostTime[BIFROST_EVENT_COUNT];
+
 	uint8 m_BifrostVictory;
 	uint16 m_sBifrostRemainingTime;
 	uint16 m_sBifrostTime;
@@ -383,6 +387,11 @@ public:
 	uint16 m_xBifrostTime;
 	uint16 m_xBifrostMonumentAttackTime;
 	bool m_bAttackBifrostMonument;
+
+	void SendBifrostTime(CUser *pUser = nullptr, bool bSendAll = false);
+
+	// Forgetten Temple
+	std::vector<int16>		m_nForgettenTempleUsers;
 
 	// zone server info
 	int					m_nServerNo, m_nServerGroupNo;

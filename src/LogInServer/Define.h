@@ -3,7 +3,7 @@
 #include "../shared/globals.h"
 
 #define CONF_LOGIN_SERVER	"./LogInServer.ini"
-#define _LISTEN_PORT		15023
+#define _LISTEN_PORT		15100
 
 struct _SERVER_INFO
 {

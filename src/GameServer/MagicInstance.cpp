@@ -2149,7 +2149,18 @@ bool MagicInstance::ExecuteType9()
 			SendSkill(false); // only update us, as only we need to know that we can see invisible players.
 		}
 	}
-
+	else if (pType->bStateChange == 9)
+	{
+		if(pSkill == nullptr || pType == nullptr)
+			return false;
+		else if (pCaster->HasSavedMagic(pType->iNum) == false)
+		{
+			g_pMain->SpawnEventNpc(pType->sMonsterNum,true,pCaster->GetZoneID(),pCaster->GetX(),pCaster->GetY(),pCaster->GetZ(),1,2);
+			SendSkill();
+			pCaster->InsertSavedMagic(nSkillID,pType->sDuration);
+		}
+	}
+	
 	return true;
 }
 

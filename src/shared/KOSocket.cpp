@@ -35,7 +35,7 @@ void KOSocket::OnRead()
 
 			uint16 header = 0;
 			GetReadBuffer().Read(&header, 2);
-			if (header != 0x69BC) 
+			if (header != 0x55aa) 
 			{
 				TRACE("%s: Got packet without header 0x55AA, got 0x%X\n", GetRemoteIP().c_str(), header);
 				goto error_handler;
@@ -74,7 +74,7 @@ void KOSocket::OnRead()
 		uint16 footer = 0;
 		GetReadBuffer().Read(&footer, 2);
 
-		if (footer != 0xBC69
+		if (footer != 0xaa55
 			|| !DecryptPacket(in_stream, pkt))
 		{
 			TRACE("%s: Footer invalid (%X) or failed to decrypt.\n", GetRemoteIP().c_str(), footer);
@@ -181,10 +181,10 @@ bool KOSocket::Send(Packet * pkt)
 		return false;
 	}
 
-	r = BurstSend((const uint8*)"\xBC\x69", 2);
+	r = BurstSend((const uint8*)"\xaa\x55", 2);
 	if (r) r = BurstSend((const uint8*)&len, 2);
 	if (r) r = BurstSend((const uint8*)out_stream, len);
-	if (r) r = BurstSend((const uint8*)"\x69\xBC", 2);
+	if (r) r = BurstSend((const uint8*)"\x55\xaa", 2);
 	if (r) BurstPush();
 	BurstEnd();
 

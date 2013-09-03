@@ -7,7 +7,7 @@ public:
 		: OdbcRecordset(dbConnection), m_pMap(pMap) {}
 
 	virtual tstring GetTableName() { return _T("KNIGHTS"); }
-	virtual tstring GetColumns() { return _T("IDNum, Flag, Nation, Ranking, IDName, Members, Chief, ViceChief_1, ViceChief_2, ViceChief_3, Gold, Domination, Points, Mark, sMarkVersion, sMarkLen, sCape, bCapeR, bCapeG, bCapeB, sAllianceKnights, ClanPointFund, strClanNotice"); }
+	virtual tstring GetColumns() { return _T("IDNum, Flag, Nation, Ranking, IDName, Members, Chief, ViceChief_1, ViceChief_2, ViceChief_3, Gold, Domination, Points, Mark, sMarkVersion, sMarkLen, sCape, bCapeR, bCapeG, bCapeB, sAllianceKnights, ClanPointFund, strClanNotice, ClanPointMethod"); }
 
 	virtual bool Fetch()
 	{
